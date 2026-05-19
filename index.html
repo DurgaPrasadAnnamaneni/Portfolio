@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Durga Prasad A · Data Scientist</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+:root {
+  --ink:#0c0e13; --ink2:#111520; --ink3:#1a2030;
+  --gold:#c9a84c; --gold-lt:#e8c97a;
+  --gold-dim:rgba(201,168,76,0.12); --gold-line:rgba(201,168,76,0.22);
+  --silver:#8a9ab8; --text:#d8dde8; --text-dim:#56637a;
+  --white:#f0f2f6; --card:rgba(18,22,36,0.75); --r:2px;
+}
+body { background:var(--ink); color:var(--text); font-family:'DM Sans',sans-serif; font-weight:300; line-height:1.7; overflow-x:hidden; }
+::-webkit-scrollbar{width:3px} ::-webkit-scrollbar-track{background:var(--ink)} ::-webkit-scrollbar-thumb{background:var(--gold)}
+body::after { content:''; position:fixed; top:0; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--gold),transparent); z-index:200; pointer-events:none; }
+ 
+/* NAV */
+nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:1.6rem 6%; background:rgba(12,14,19,0.93); backdrop-filter:blur(20px); border-bottom:1px solid rgba(201,168,76,0.1); transition:padding 0.3s; }
+.nav-brand { font-family:'Cormorant Garamond',serif; font-size:1.35rem; font-weight:600; letter-spacing:0.05em; color:var(--white); }
+.nav-brand em { color:var(--gold); font-style:normal; }
+.nav-links { display:flex; gap:2.5rem; list-style:none; }
+.nav-links a { font-size:0.7rem; font-weight:400; letter-spacing:0.18em; text-transform:uppercase; color:var(--text-dim); text-decoration:none; position:relative; transition:color 0.25s; }
+.nav-links a::after { content:''; position:absolute; bottom:-4px; left:0; width:0; height:1px; background:var(--gold); transition:width 0.3s; }
+.nav-links a:hover { color:var(--gold); }
+.nav-links a:hover::after { width:100%; }
+ 
+/* HERO */
+#hero { min-height:100vh; display:grid; grid-template-columns:1fr 1fr; align-items:center; padding:10rem 6% 6rem; gap:5rem; position:relative; overflow:hidden; }
+.hero-glow { position:absolute; right:-5%; top:40%; transform:translateY(-50%); width:55vw; height:55vw; max-width:700px; max-height:700px; border-radius:50%; background:radial-gradient(circle, rgba(201,168,76,0.05) 0%, transparent 65%); pointer-events:none; }
+.hero-eyebrow { display:flex; align-items:center; gap:0.9rem; font-size:0.67rem; letter-spacing:0.28em; text-transform:uppercase; color:var(--gold); margin-bottom:1.6rem; opacity:0; animation:rise 0.9s 0.1s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-eyebrow span { display:block; width:36px; height:1px; background:var(--gold); }
+h1.hero-name { font-family:'Cormorant Garamond',serif; font-size:clamp(3.2rem,5.5vw,5.2rem); font-weight:300; line-height:1.06; letter-spacing:-0.01em; color:var(--white); opacity:0; animation:rise 0.9s 0.25s cubic-bezier(.16,1,.3,1) forwards; }
+h1.hero-name strong { font-weight:600; color:var(--gold); display:block; }
+.hero-role { font-family:'Cormorant Garamond',serif; font-size:1.2rem; font-weight:300; font-style:italic; color:var(--silver); margin-top:0.9rem; letter-spacing:0.04em; opacity:0; animation:rise 0.9s 0.4s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-div { width:55px; height:1px; background:linear-gradient(90deg,var(--gold),transparent); margin:2rem 0; opacity:0; animation:rise 0.9s 0.55s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-summary { font-size:0.87rem; color:var(--silver); line-height:1.9; max-width:470px; opacity:0; animation:rise 0.9s 0.7s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-actions { display:flex; gap:1rem; flex-wrap:wrap; margin-top:2.5rem; opacity:0; animation:rise 0.9s 0.85s cubic-bezier(.16,1,.3,1) forwards; }
+.btn { display:inline-flex; align-items:center; gap:0.6rem; padding:0.85rem 2.2rem; font-size:0.7rem; font-weight:500; letter-spacing:0.18em; text-transform:uppercase; text-decoration:none; border-radius:var(--r); transition:all 0.25s; }
+.btn-gold { background:var(--gold); color:var(--ink); border:1px solid var(--gold); }
+.btn-gold:hover { background:var(--gold-lt); border-color:var(--gold-lt); transform:translateY(-2px); box-shadow:0 8px 28px rgba(201,168,76,0.28); }
+.btn-ghost { background:transparent; color:var(--gold); border:1px solid var(--gold-line); }
+.btn-ghost:hover { background:var(--gold-dim); border-color:var(--gold); transform:translateY(-2px); }
+ 
+/* HERO CARD */
+.hero-right { opacity:0; animation:rise 0.9s 1s cubic-bezier(.16,1,.3,1) forwards; }
+.hero-card { background:var(--card); border:1px solid var(--gold-line); padding:2.4rem; position:relative; }
+.hero-card::before { content:''; position:absolute; top:0; left:0; width:3px; height:100%; background:linear-gradient(180deg,var(--gold),transparent); }
+.hc-title { font-family:'Cormorant Garamond',serif; font-size:0.68rem; letter-spacing:0.22em; text-transform:uppercase; color:var(--gold); margin-bottom:1.8rem; }
+.stat-row { display:grid; grid-template-columns:1fr 1fr; gap:1.2rem; margin-bottom:2rem; }
+.stat-box { padding:1.1rem; background:rgba(201,168,76,0.04); border:1px solid rgba(201,168,76,0.1); }
+.stat-num { font-family:'Cormorant Garamond',serif; font-size:2.1rem; font-weight:600; color:var(--gold); line-height:1; }
+.stat-lbl { font-size:0.62rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--text-dim); margin-top:0.3rem; }
+.ci-list { display:flex; flex-direction:column; gap:0.7rem; padding-top:1.4rem; border-top:1px solid rgba(201,168,76,0.1); }
+.ci { display:flex; align-items:center; gap:0.75rem; font-size:0.73rem; color:var(--silver); }
+.ci-dot { width:5px; height:5px; border-radius:50%; background:var(--gold); flex-shrink:0; }
+.ci a { color:var(--gold); text-decoration:none; }
+.ci a:hover { color:var(--gold-lt); }
+ 
+/* SECTION BASE */
+.section { padding:7rem 6%; }
+.section-alt { background:var(--ink2); }
+.sec-lbl { display:flex; align-items:center; gap:0.9rem; font-size:0.63rem; letter-spacing:0.26em; text-transform:uppercase; color:var(--gold); margin-bottom:0.7rem; }
+.sec-lbl span { display:block; width:26px; height:1px; background:var(--gold); }
+.sec-h { font-family:'Cormorant Garamond',serif; font-size:clamp(1.9rem,3.8vw,3rem); font-weight:300; line-height:1.1; color:var(--white); margin-bottom:3.5rem; }
+.sec-h em { color:var(--gold); font-style:normal; font-weight:600; }
+ 
+/* ABOUT */
+.about-grid { display:grid; grid-template-columns:1.1fr 0.9fr; gap:5rem; align-items:start; max-width:1200px; }
+.about-body p { font-size:0.87rem; color:var(--silver); line-height:1.92; margin-bottom:1.1rem; }
+.about-body p:first-child { font-size:0.97rem; color:var(--text); }
+.edu-stack { display:flex; flex-direction:column; gap:1.5rem; }
+.edu-item { display:grid; grid-template-columns:3px 1fr; gap:1.2rem; }
+.edu-line { width:3px; background:linear-gradient(180deg,var(--gold),rgba(201,168,76,0.08)); border-radius:2px; margin-top:4px; }
+.edu-deg { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:600; color:var(--white); }
+.edu-school { font-size:0.73rem; color:var(--silver); margin-top:0.2rem; }
+.edu-meta { display:flex; gap:0.8rem; margin-top:0.6rem; flex-wrap:wrap; }
+.edu-badge { font-size:0.62rem; padding:0.2rem 0.65rem; border:1px solid var(--gold-line); color:var(--gold); letter-spacing:0.08em; }
+ 
+/* SKILLS */
+.skills-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(255px,1fr)); gap:1.4rem; max-width:1200px; }
+.sk-card { background:var(--card); border:1px solid rgba(201,168,76,0.1); padding:1.9rem; position:relative; overflow:hidden; transition:border-color 0.3s,transform 0.3s; }
+.sk-card::after { content:''; position:absolute; bottom:0; left:0; width:0; height:1px; background:var(--gold); transition:width 0.4s; }
+.sk-card:hover { border-color:rgba(201,168,76,0.35); transform:translateY(-4px); }
+.sk-card:hover::after { width:100%; }
+.sk-icon { font-size:1.3rem; margin-bottom:0.7rem; }
+.sk-name { font-family:'Cormorant Garamond',serif; font-size:0.97rem; font-weight:600; color:var(--gold); margin-bottom:0.9rem; letter-spacing:0.03em; }
+.sk-pills { display:flex; flex-wrap:wrap; gap:0.4rem; }
+.pill { font-size:0.63rem; padding:0.28rem 0.7rem; background:rgba(201,168,76,0.05); border:1px solid rgba(201,168,76,0.14); color:var(--silver); letter-spacing:0.06em; transition:background 0.2s,color 0.2s; }
+.sk-card:hover .pill { background:rgba(201,168,76,0.09); color:var(--text); }
+ 
+/* PROJECTS */
+.proj-list { display:flex; flex-direction:column; gap:2.5rem; max-width:1200px; }
+.proj-item { display:grid; grid-template-columns:75px 1fr; gap:2.5rem; padding:2.5rem; background:var(--card); border:1px solid rgba(201,168,76,0.1); position:relative; overflow:hidden; transition:border-color 0.3s,transform 0.3s; }
+.proj-item::before { content:''; position:absolute; top:0; left:0; width:3px; height:0; background:var(--gold); transition:height 0.5s; }
+.proj-item:hover { border-color:rgba(201,168,76,0.32); transform:translateX(5px); }
+.proj-item:hover::before { height:100%; }
+.proj-num { font-family:'Cormorant Garamond',serif; font-size:3.2rem; font-weight:300; color:rgba(201,168,76,0.12); line-height:1; user-select:none; padding-top:0.3rem; }
+.proj-date { font-size:0.63rem; letter-spacing:0.2em; text-transform:uppercase; color:var(--gold); margin-bottom:0.5rem; }
+.proj-title { font-family:'Cormorant Garamond',serif; font-size:1.5rem; font-weight:600; color:var(--white); line-height:1.22; margin-bottom:1rem; }
+.proj-tech { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:1.3rem; }
+.tech-tag { font-size:0.6rem; padding:0.22rem 0.65rem; background:rgba(201,168,76,0.07); border:1px solid rgba(201,168,76,0.2); color:var(--gold); letter-spacing:0.08em; }
+.proj-pts { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+.proj-pts li { font-size:0.81rem; color:var(--silver); line-height:1.75; padding-left:1.2rem; position:relative; }
+.proj-pts li::before { content:'—'; position:absolute; left:0; color:var(--gold); font-weight:300; }
+ 
+/* CERTIFICATES */
+.cert-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.4rem; max-width:1200px; }
+.cert-card { background:var(--card); border:1px solid rgba(201,168,76,0.1); padding:2rem 2.2rem; display:flex; align-items:center; gap:1.5rem; transition:border-color 0.3s,transform 0.3s; }
+.cert-card:hover { border-color:rgba(201,168,76,0.38); transform:translateY(-3px); }
+.cert-medal { width:50px; height:50px; flex-shrink:0; background:rgba(201,168,76,0.06); border:1px solid var(--gold-line); display:flex; align-items:center; justify-content:center; font-size:1.3rem; border-radius:50%; }
+.cert-title { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:600; color:var(--white); }
+.cert-issuer { font-size:0.71rem; color:var(--silver); margin-top:0.2rem; }
+.cert-year { display:inline-block; font-size:0.6rem; padding:0.15rem 0.6rem; border:1px solid var(--gold-line); color:var(--gold); margin-top:0.5rem; letter-spacing:0.1em; }
+ 
+/* CONTACT */
+#contact { text-align:center; }
+.contact-wrap { max-width:660px; margin:0 auto; }
+.contact-sub { font-size:0.86rem; color:var(--silver); line-height:1.85; margin-bottom:2.5rem; }
+.contact-email { display:inline-block; font-family:'Cormorant Garamond',serif; font-size:clamp(1.3rem,2.8vw,1.9rem); font-weight:300; color:var(--gold); text-decoration:none; border-bottom:1px solid var(--gold-line); padding-bottom:0.2rem; margin-bottom:2.8rem; letter-spacing:0.02em; transition:color 0.2s,border-color 0.2s; }
+.contact-email:hover { color:var(--gold-lt); border-color:var(--gold); }
+.contact-socials { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; }
+.soc-btn { display:inline-flex; align-items:center; gap:0.55rem; padding:0.72rem 1.7rem; font-size:0.68rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--silver); text-decoration:none; border:1px solid rgba(201,168,76,0.14); background:var(--card); transition:all 0.25s; border-radius:var(--r); }
+.soc-btn:hover { color:var(--gold); border-color:var(--gold); background:rgba(201,168,76,0.06); transform:translateY(-2px); }
+ 
+/* FOOTER */
+footer { border-top:1px solid rgba(201,168,76,0.1); padding:1.8rem 6%; display:flex; justify-content:space-between; align-items:center; font-size:0.67rem; color:var(--text-dim); letter-spacing:0.08em; }
+.f-brand { font-family:'Cormorant Garamond',serif; font-size:0.92rem; color:var(--gold); }
+ 
+/* REVEAL */
+.reveal { opacity:0; transform:translateY(26px); transition:opacity 0.75s cubic-bezier(.16,1,.3,1),transform 0.75s cubic-bezier(.16,1,.3,1); }
+.reveal.in { opacity:1; transform:none; }
+.d1{transition-delay:.1s} .d2{transition-delay:.2s} .d3{transition-delay:.3s}
+ 
+/* ANIMATION */
+@keyframes rise { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+ 
+/* MOBILE */
+@media(max-width:900px){
+  #hero{grid-template-columns:1fr;padding:8rem 5% 4rem;gap:3rem}
+  .about-grid{grid-template-columns:1fr;gap:3rem}
+  .proj-item{grid-template-columns:1fr}
+  .proj-num{display:none}
+  footer{flex-direction:column;gap:0.5rem;text-align:center}
+}
+@media(max-width:600px){
+  nav{padding:1rem 5%}
+  .nav-links{display:none}
+}
+</style>
+</head>
+<body>
+ 
+<nav>
+  <div class="nav-brand">Durga Prasad <em>A</em></div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certificates">Credentials</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+ 
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div>
+    <div class="hero-eyebrow"><span></span>Data Scientist &amp; ML Engineer</div>
+    <h1 class="hero-name">Durga<strong>Prasad A</strong></h1>
+    <p class="hero-role">Python · Power BI · Machine Learning · NLP</p>
+    <div class="hero-div"></div>
+    <p class="hero-summary">Computer Science Engineering graduate skilled in building end-to-end data solutions — from predictive ML models and NLP pipelines to executive-ready Power BI dashboards. I turn complex datasets into clear, actionable intelligence.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn btn-gold">View Projects</a>
+      <a href="mailto:durgaprasada7585@gmail.com" class="btn btn-ghost">Get in Touch</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-card">
+      <div class="hc-title">At a Glance</div>
+      <div class="stat-row">
+        <div class="stat-box"><div class="stat-num">8.22</div><div class="stat-lbl">CGPA · B.E CSE</div></div>
+        <div class="stat-box"><div class="stat-num">5+</div><div class="stat-lbl">ML Models Built</div></div>
+        <div class="stat-box"><div class="stat-num">2</div><div class="stat-lbl">Full-Stack Projects</div></div>
+        <div class="stat-box"><div class="stat-num">2</div><div class="stat-lbl">Certifications</div></div>
+      </div>
+      <div class="ci-list">
+        <div class="ci"><span class="ci-dot"></span>Bengaluru, Karnataka, India</div>
+        <div class="ci"><span class="ci-dot"></span><a href="tel:+917975908319">+91-7975908319</a></div>
+        <div class="ci"><span class="ci-dot"></span><a href="mailto:durgaprasada7585@gmail.com">durgaprasada7585@gmail.com</a></div>
+        <div class="ci"><span class="ci-dot"></span><a href="https://github.com/DurgaPrasadAnnamaneni" target="_blank">github.com/DurgaPrasadAnnamaneni</a></div>
+        <div class="ci"><span class="ci-dot"></span><a href="https://linkedin.com/in/durga-prasad-annamaneni/" target="_blank">linkedin/durga-prasad-annamaneni</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- ABOUT -->
+<section id="about" class="section section-alt">
+  <div class="about-grid reveal">
+    <div class="about-body">
+      <div class="sec-lbl"><span></span>About Me</div>
+      <h2 class="sec-h">Turning raw data into<br><em>business decisions</em></h2>
+      <p>I am a Computer Science Engineering graduate from Ballari Institute of Technology and Management, with a strong academic record (CGPA 8.22) and a genuine passion for data-driven problem solving.</p>
+      <p>My expertise spans the full data lifecycle — from collecting and cleaning datasets and engineering meaningful features, to training and rigorously comparing machine learning models, and communicating findings through interactive Power BI dashboards.</p>
+      <p>I have deployed production-grade applications on cloud platforms (Render, MongoDB Atlas) using Streamlit and Flask, and I am actively seeking roles in Data Science, ML Engineering, or Business Intelligence.</p>
+    </div>
+    <div>
+      <div class="sec-lbl" style="margin-bottom:1.4rem;"><span></span>Education</div>
+      <div class="edu-stack">
+        <div class="edu-item">
+          <div class="edu-line"></div>
+          <div>
+            <div class="edu-deg">B.E — Computer Science &amp; Engineering</div>
+            <div class="edu-school">Ballari Institute of Technology and Management, Karnataka</div>
+            <div class="edu-meta"><span class="edu-badge">2025</span><span class="edu-badge">CGPA 8.22 / 10</span></div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-line"></div>
+          <div>
+            <div class="edu-deg">Senior Secondary (PUC)</div>
+            <div class="edu-school">Narayana PU College, Ballari, Karnataka</div>
+            <div class="edu-meta"><span class="edu-badge">2021</span><span class="edu-badge">91%</span></div>
+          </div>
+        </div>
+        <div class="edu-item">
+          <div class="edu-line"></div>
+          <div>
+            <div class="edu-deg">Secondary (SSLC)</div>
+            <div class="edu-school">Nandhi High School, Ballari, Karnataka</div>
+            <div class="edu-meta"><span class="edu-badge">2019</span><span class="edu-badge">85%</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="sec-lbl reveal"><span></span>Technical Expertise</div>
+  <h2 class="sec-h reveal">Skills &amp; <em>Technologies</em></h2>
+  <div class="skills-grid">
+    <div class="sk-card reveal d1"><div class="sk-icon">⌨️</div><div class="sk-name">Programming Languages</div><div class="sk-pills"><span class="pill">Python</span><span class="pill">SQL</span></div></div>
+    <div class="sk-card reveal d2"><div class="sk-icon">📊</div><div class="sk-name">Data Visualization &amp; BI</div><div class="sk-pills"><span class="pill">Power BI</span><span class="pill">DAX</span><span class="pill">Power Query</span><span class="pill">Data Modeling</span><span class="pill">Matplotlib</span><span class="pill">Seaborn</span></div></div>
+    <div class="sk-card reveal d3"><div class="sk-icon">🤖</div><div class="sk-name">Machine Learning &amp; AI</div><div class="sk-pills"><span class="pill">Scikit-learn</span><span class="pill">TensorFlow</span><span class="pill">Keras</span><span class="pill">XGBoost</span><span class="pill">NLP</span><span class="pill">Time-Series</span></div></div>
+    <div class="sk-card reveal d1"><div class="sk-icon">🧮</div><div class="sk-name">Data Science</div><div class="sk-pills"><span class="pill">Pandas</span><span class="pill">NumPy</span><span class="pill">Statistical Modeling</span><span class="pill">Feature Engineering</span><span class="pill">EDA</span></div></div>
+    <div class="sk-card reveal d2"><div class="sk-icon">🌐</div><div class="sk-name">Frontend &amp; Deployment</div><div class="sk-pills"><span class="pill">HTML</span><span class="pill">CSS</span><span class="pill">Streamlit</span><span class="pill">Flask</span><span class="pill">Render</span></div></div>
+    <div class="sk-card reveal d3"><div class="sk-icon">🗄️</div><div class="sk-name">Databases &amp; Tools</div><div class="sk-pills"><span class="pill">MySQL</span><span class="pill">MongoDB Atlas</span><span class="pill">GitHub</span><span class="pill">Jupyter</span><span class="pill">VS Code</span><span class="pill">Google Colab</span></div></div>
+    <div class="sk-card reveal d1"><div class="sk-icon">📐</div><div class="sk-name">CS Fundamentals</div><div class="sk-pills"><span class="pill">OOPs</span><span class="pill">DBMS</span><span class="pill">DSA</span></div></div>
+    <div class="sk-card reveal d2"><div class="sk-icon">🤝</div><div class="sk-name">Professional Skills</div><div class="sk-pills"><span class="pill">Problem Solving</span><span class="pill">Team Player</span><span class="pill">Adaptability</span><span class="pill">Attention to Detail</span></div></div>
+  </div>
+</section>
+ 
+<!-- PROJECTS -->
+<section id="projects" class="section section-alt">
+  <div class="sec-lbl reveal"><span></span>Selected Work</div>
+  <h2 class="sec-h reveal">Featured <em>Projects</em></h2>
+  <div class="proj-list">
+    <div class="proj-item reveal">
+      <div class="proj-num">01</div>
+      <div>
+        <div class="proj-date">December 2025</div>
+        <h3 class="proj-title">Apple Stock Price Prediction System</h3>
+        <div class="proj-tech">
+          <span class="tech-tag">Python</span><span class="tech-tag">XGBoost</span><span class="tech-tag">ARIMA / SARIMA</span><span class="tech-tag">Random Forest</span><span class="tech-tag">Scikit-learn</span><span class="tech-tag">Statsmodels</span><span class="tech-tag">Pandas · NumPy</span><span class="tech-tag">Streamlit</span><span class="tech-tag">Power BI</span><span class="tech-tag">SQL</span>
+        </div>
+        <ul class="proj-pts">
+          <li>Predicted Apple stock prices 30 days ahead using historical Yahoo Finance data (2012–2019), delivering business-ready forecasts with practical financial relevance.</li>
+          <li>Designed, trained, and compared 5 forecasting models — ARIMA, SARIMA, Random Forest, XGBoost, and Persistent Model — evaluated on RMSE, MAE, and R² Score with Grid Search hyperparameter tuning.</li>
+          <li>Conducted comprehensive EDA and Feature Engineering including rolling moving averages, lag values, and volatility metrics to improve model signal quality.</li>
+          <li>Built an executive Power BI dashboard visualising actual vs. predicted prices, RMSE comparisons across models, and 30-day forecast trends for stakeholder reporting.</li>
+          <li>Deployed a fully interactive Streamlit web application enabling real-time predictions and dynamic visualisations for end-users.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="proj-item reveal">
+      <div class="proj-num">02</div>
+      <div>
+        <div class="proj-date">August 2025</div>
+        <h3 class="proj-title">YouTube Comment Sentiment Analysis Platform</h3>
+        <div class="proj-tech">
+          <span class="tech-tag">Python</span><span class="tech-tag">CNN</span><span class="tech-tag">RNN</span><span class="tech-tag">TensorFlow · Keras</span><span class="tech-tag">NLP</span><span class="tech-tag">Flask</span><span class="tech-tag">MySQL</span><span class="tech-tag">MongoDB Atlas</span><span class="tech-tag">Power BI</span><span class="tech-tag">Render</span>
+        </div>
+        <ul class="proj-pts">
+          <li>Architected and deployed a real-time YouTube comment sentiment analysis platform integrating CNN and RNN deep learning models for high-accuracy classification.</li>
+          <li>Applied rigorous NLP preprocessing — tokenisation, lemmatisation, and stopword removal — achieving a 30% reduction in data noise and improving model performance.</li>
+          <li>Developed a Power BI report tracking positive, negative, and neutral sentiment distribution over time, enabling content creators to monitor audience engagement patterns.</li>
+          <li>Deployed the scalable full-stack application on Render with MongoDB Atlas cloud database, incorporating real-time user status tracking and thorough unit testing.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+ 
+<!-- CERTIFICATES -->
+<section id="certificates" class="section">
+  <div class="sec-lbl reveal"><span></span>Credentials</div>
+  <h2 class="sec-h reveal">Certifi<em>cations</em></h2>
+  <div class="cert-grid">
+    <div class="cert-card reveal d1">
+      <div class="cert-medal">🎓</div>
+      <div><div class="cert-title">Data Science</div><div class="cert-issuer">ExcelR Solutions</div><div class="cert-year">2025</div></div>
+    </div>
+    <div class="cert-card reveal d2">
+      <div class="cert-medal">🏅</div>
+      <div><div class="cert-title">Data Science Internship</div><div class="cert-issuer">AIVariant</div><div class="cert-year">2025</div></div>
+    </div>
+  </div>
+</section>
+ 
+<!-- CONTACT -->
+<section id="contact" class="section section-alt">
+  <div class="contact-wrap reveal">
+    <div class="sec-lbl" style="justify-content:center;margin-bottom:0.7rem;"><span></span>Get In Touch</div>
+    <h2 class="sec-h" style="margin-bottom:1rem;">Open to <em>Opportunities</em></h2>
+    <p class="contact-sub">I am actively seeking full-time roles in Data Science, Machine Learning Engineering, and Business Intelligence. I welcome collaboration, freelance projects, or a conversation about data.</p>
+    <a href="mailto:durgaprasada7585@gmail.com" class="contact-email">durgaprasada7585@gmail.com</a>
+    <div class="contact-socials">
+      <a href="tel:+917975908319" class="soc-btn">📞 &nbsp;+91-7975908319</a>
+      <a href="https://github.com/DurgaPrasadAnnamaneni" class="soc-btn" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/durga-prasad-annamaneni/" class="soc-btn" target="_blank">LinkedIn</a>
+    </div>
+  </div>
+</section>
+ 
+<footer>
+  <span class="f-brand">Durga Prasad A</span>
+  <span>© 2025 · Data Scientist · Bengaluru, Karnataka</span>
+</footer>
+ 
+<script>
+// Scroll reveal
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold:0.1 });
+document.querySelectorAll('.reveal').forEach(r => io.observe(r));
+ 
+// Nav compact on scroll
+const nav = document.querySelector('nav');
+window.addEventListener('scroll', () => {
+  nav.style.padding = window.scrollY > 60 ? '0.9rem 6%' : '1.6rem 6%';
+});
+ 
+// Active nav link
+const secs = document.querySelectorAll('section[id]');
+const links = document.querySelectorAll('.nav-links a');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  secs.forEach(s => { if(window.scrollY >= s.offsetTop - 130) cur = s.id; });
+  links.forEach(a => { a.style.color = a.getAttribute('href')==='#'+cur ? 'var(--gold)' : ''; });
+});
+</script>
+</body>
+</html>
+ 
+
